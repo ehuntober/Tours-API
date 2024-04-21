@@ -95,6 +95,8 @@ app.delete('/api/v1/tours/:id',(req,res)=>{
     })
 })
 
+app.patch('/api/v1/tours/id')
+
 const port = 3000;
 app.listen(port, () =>{
     console.log(`App running on port ${port}`)
