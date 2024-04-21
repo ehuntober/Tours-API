@@ -40,14 +40,21 @@ app.post('/api/v1/tours',(req,res) =>{
                 tour: newTour
             }
         })
-
-    })
-
-   
-    
-
+    }) 
 })
 
+
+app.get('/api/v1/tours/:id', (req,res) =>{
+    const id = req.params.id * 1;
+    const tour = tours.find(el=> el.id === id);
+    res.status(200).json({
+        status: 'sucess',
+        data:{
+            tours: tour
+        }
+    });
+
+})
 const port = 3000;
 app.listen(port, () =>{
     console.log(`App running on port ${port}`)
