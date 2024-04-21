@@ -36,7 +36,7 @@ app.post('/api/v1/tours',(req,res) =>{
     //         tour: tour
     //     }
     // });
-    console.log(req.body);
+    console.log(req.body);;
 
 })
 
