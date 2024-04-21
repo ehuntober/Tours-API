@@ -1,6 +1,7 @@
 const express = require('express')
 const fs = require('fs')
 const app = express();
+app.use(express.json())
 
 // app.get('/', (req,res) =>{
 //     res.status(200).json({
@@ -23,6 +24,19 @@ app.get('/api/v1/tours', (req,res) =>{
             tours: tours
         }
     });
+
+})
+
+app.post('/api/v1/tours',(req,res) =>{
+    // const tour = req.body;
+    // tours.push(tour);
+    // res.status(201).json({
+    //     status:'sucess',
+    //     data: {
+    //         tour: tour
+    //     }
+    // });
+    console.log(req.body);
 
 })
 
