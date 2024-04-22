@@ -11,7 +11,9 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 
-
+// ROUTES
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/tours', tourRouter);
 
 
    const port = 3000;
