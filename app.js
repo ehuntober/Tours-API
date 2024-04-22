@@ -130,6 +130,19 @@ const createUser = (req,res) =>{
     })
 }
 
+const updateUser = (req,res) =>{
+    res.status(500).json({
+        status: 'error',
+        message: 'this route is not yet defined'
+    })
+}
+
+const deleteUser = (req,res) =>{
+    res.status(500).json({
+        status: 'error',
+        message: 'this route is not yet defined'
+    })
+}
 
 // app.get('/api/v1/tours',getAllTours)
 // app.get('/api/v1/tours/:id', getTour)
