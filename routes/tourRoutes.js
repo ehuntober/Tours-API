@@ -2,7 +2,10 @@ const express = require('express')
 const tourController = require('./../controllers/tourController')
 const router = express.Router();
 // })
-
+router.param('id', (req,res,next, val) =>{
+    conosole.log(`Tour id is: ${id}`)
+    next()
+})
 
 router
 .route('/')
