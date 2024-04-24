@@ -7,9 +7,6 @@ const router = express.Router();
 //     next()
 // })
 
-exports.checkID = (req,res,next,val) =>{
-    if(req.para)
-}
 
 router
 .route('/')
