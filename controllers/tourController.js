@@ -21,6 +21,7 @@ exports.checkBody = (req,res,next) =>{
             message: 'Missing name or price'
         })
     }
+    next();
 }
 
 exports.getAllTours = (req,res) =>{
