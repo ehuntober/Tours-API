@@ -2,10 +2,14 @@ const express = require('express')
 const tourController = require('./../controllers/tourController')
 const router = express.Router();
 // })
-router.param('id', (req,res,next, val) =>{
-    conosole.log(`Tour id is: ${id}`)
-    next()
-})
+// router.param('id', (req,res,next, val) =>{
+//     console.log(`Tour id is: ${val}`)
+//     next()
+// })
+
+exports.checkID = (req,res,next,val) =>{
+    if(req.para)
+}
 
 router
 .route('/')
