@@ -14,6 +14,14 @@ const tours = JSON.parse(
         next()
     }
     
+exports.checkBody = (req,res,next) =>{
+    if(!req.body.name || !req.body.price){
+        return res.status(400).json({
+            status: "fail",
+            message: 'Missing name or price'
+        })
+    }
+}
 
 exports.getAllTours = (req,res) =>{
     res.status(200).json({
