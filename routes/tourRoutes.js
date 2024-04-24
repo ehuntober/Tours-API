@@ -7,7 +7,7 @@ const router = express.Router();
 //     next()
 // })
 
-router.param('id', tourController.checkID)
+// router.param('id', tourController.checkID)
 
 
 router

@@ -19,16 +19,6 @@ dbConnect();
 
 
 
-const testTour = new Tour({
-    name: 'The Park Camper',
-    // rating: 4.7,
-    price: 497
-})
-testTour.save().then(doc=>{
-    console.log(doc)
-}).catch(err=>{
-    console.log(err)
-})
 
 const port = 3000;
 app.listen(port, () => {
