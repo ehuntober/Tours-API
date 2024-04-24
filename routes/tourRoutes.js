@@ -7,6 +7,8 @@ const router = express.Router();
 //     next()
 // })
 
+router.param('id', tourController.checkID)
+
 
 router
 .route('/')
