@@ -28,7 +28,11 @@ exports.checkBody = (req,res,next) =>{
 
 exports.getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find();
+    const queryObj = {...req.query};
+    const excludedFields = ['page','sort', 'limit', 'fields'];
+    excludedFields.forEach(el=> delete queryObj[el]);
+    
+    const tours = await Tour.find(req.query);
     res.status(200).json({
       status: 'success',
       results: tours.length,
