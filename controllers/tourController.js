@@ -56,7 +56,7 @@ exports.getTour = (req,res) =>{
     
 }
 
-exports.createTour =(req,res) =>{
+exports.createTour = async(req,res) =>{
     // const newId = tours[tours.length - 1].id + 1;
     // const newTour = Object.assign({id: newId},req.body)
 
@@ -70,11 +70,24 @@ exports.createTour =(req,res) =>{
     //         }
     //     })
     // }) 
-    const 
+    // const 
 
-    res.status(201).json({
-        status: 'Success'
-    })
+    // res.status(201).json({
+    //     status: 'Success'
+    // })
+
+    try{
+        const newTour = await Tour.create(req.body);
+        res.status(201).json({
+            status: 'Success',
+            data:{
+                tour: newTour
+            }
+        })
+
+    }catch(err){
+
+    }
 }
 
 
