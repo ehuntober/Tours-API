@@ -30,3 +30,4 @@ const deleteData = async () =>{
     }
 }
 
+console.log(process.argv)
