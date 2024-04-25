@@ -26,24 +26,24 @@ exports.checkBody = (req,res,next) =>{
     next();
 }
 
-exports.getAllTours = async(req,res) =>{
-    try{
+exports.getAllTours = async (req, res) => {
+  try {
     const tours = await Tour.find();
-    
     res.status(200).json({
-        status: 'success',
-        results: tours.length,
-        data:{
-            tours
-        }
-    })
-} catch (err){
-    res.status(404).json({
-        status: 'fail',
-        message: err
-    })
-}
-}
+      status: 'success',
+      results: tours.length,
+      data: {
+        tours,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Something went wrong',
+    });
+    console.log(err)
+  }
+};
 
 exports.getTour = async (req, res) => {
     try {
