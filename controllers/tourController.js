@@ -153,9 +153,18 @@ exports.deleteTour = (req,res)=>{
     //         message: 'Invalid ID'
     //     });
     // }
-    
-    res.status(204).json({
-        status: "success",
-        data:null
-    })
+
+    try{
+        Tour.findByIdAndDelete(req.params.id);
+        res.status(204).json({
+            status: "success",
+            data:null
+        })
+    }
+    catch(err){
+     res.status(404).json({
+        status: 'fail',
+        message: err
+     })
+    }
 }
