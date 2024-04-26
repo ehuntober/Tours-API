@@ -83,10 +83,10 @@ class APIFeatures{
 
     this.query = this.query.skip(skip).limit(limit)
 
-    if(this.queryString.page){
-      const numTours = await Tour.countDocuments();
-      if(skip >= numTours) throw new Error('This page does not exist')
-    }
+    // if(this.queryString.page){
+    //   const numTours = await Tour.countDocuments();
+    //   if(skip >= numTours) throw new Error('This page does not exist')
+    // }
       return this;
   }
 
