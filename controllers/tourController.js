@@ -50,6 +50,28 @@ class APIFeatures{
   this.query.find(JSON.parse(queryStr))
     // let query = Tour.find(JSON.parse(queryStr));
 
+    return this;
+
+  }
+
+  sort(){
+    if(this.queryString.sort){
+      const sortBy = this.queryString.sort.split(',').join('');
+      this.query = this.query.sort(sortBy)
+    } else{
+      this.query = this.sortquery.sort('-createdAt')
+    }
+    return this;
+  }
+
+  limitFields(){
+    if(this.queryString.fields){
+      const fields = this.queryString.fields.split(',').join(' ');
+      this.query = this.query.select(fields);
+    } else{
+      this.query = this.query.select('-__v')
+    }
+    return this;
   }
 }
 
@@ -67,20 +89,20 @@ exports.getAllTours = async (req, res) => {
     // let query = Tour.find(JSON.parse(queryStr));
 
     // 2) Sorting
-    if(req.query.sort){
-      const sortBy = req.query.sort.split(',').join('');
-      query = query.sort(sortBy)
-    } else{
-      query = query.sort('-createdAt')
-    }
+    // if(req.query.sort){
+    //   const sortBy = req.query.sort.split(',').join('');
+    //   query = query.sort(sortBy)
+    // } else{
+    //   query = query.sort('-createdAt')
+    // }
 
     // 3) Field limiting
-    if(req.query.fields){
-      const fields = req.query.fields.split(',').join(' ');
-      query = query.select(fields);
-    } else{
-      query = query.select('-__v')
-    }
+    // if(req.query.fields){
+    //   const fields = req.query.fields.split(',').join(' ');
+    //   query = query.select(fields);
+    // } else{
+    //   query = query.select('-__v')
+    // }
 
     // 4) pagination
     const page = req.query.page * 1 || 1;
@@ -98,7 +120,11 @@ exports.getAllTours = async (req, res) => {
 
 
     // EXECUTE QUERY
-    const tours = await query.exec();
+    
+    const features = new APIFeatures(Tour.find(), req.query).filter().sort()
+    const tours = await features.query.exec();
+    // const tours = await query.exec();
+
     // query.sort().select().skip().limit()
 
     // SEND RESPONSE
