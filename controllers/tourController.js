@@ -251,6 +251,12 @@ exports.getTourStats = async(req,res) =>{
           numTours: { $sum: 1},
           numRatings: { $sum: '$ratingsQuantity'}
         }
+      },
+      {
+        $sort: { avgPrice: 1}
+      },
+      {
+        $match: {_id: {$ne: 'EASY'}}
       }
 
     ])
