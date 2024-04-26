@@ -123,23 +123,28 @@ exports.getAllTours = async (req, res) => {
     // }
 
     // 4) pagination
-    const page = req.query.page * 1 || 1;
-    const limit = req.query.limit *1 || 100
-    const skip = (page -1) * limit
+    // const page = req.query.page * 1 || 1;
+    // const limit = req.query.limit *1 || 100
+    // const skip = (page -1) * limit
 
-    // page=3&limit=10, 1-10, page 1, 11-20, page 2, 21-30, page3
+    // // page=3&limit=10, 1-10, page 1, 11-20, page 2, 21-30, page3
 
-    query = query.skip(skip).limit(limit)
+    // query = query.skip(skip).limit(limit)
 
-    if(req.query.page){
-      const numTours = await Tour.countDocuments();
-      if(skip >= numTours) throw new Error('This page does not exist')
-    }
+    // if(req.query.page){
+    //   const numTours = await Tour.countDocuments();
+    //   if(skip >= numTours) throw new Error('This page does not exist')
+    // }
 
 
     // EXECUTE QUERY
     
-    const features = new APIFeatures(Tour.find(), req.query).filter().sort()
+    const features = new APIFeatures(Tour.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+    
     const tours = await features.query.exec();
     // const tours = await query.exec();
 
