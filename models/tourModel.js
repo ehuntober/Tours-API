@@ -110,6 +110,7 @@ tourSchema.post(/^find/, function(docs,next){
 
 // AGGREGATION MIDDLEWARE
 tourSchema.pre('aggregate', function(next){
+    this.pipeline().unshift({$})
     console.log(this.pipeline());
 
 })
