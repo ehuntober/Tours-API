@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 require('dotenv').config();
+const AppError = require('./../utils/appError')
 
 
 exports.signup = catchAsync(async (req, res, next) => {
@@ -28,6 +29,15 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = (req,res, next) =>{
     const {email, password} = req.body;
+
+    if(!email || !password){
+        next(new AppError('Please email and password!', 400))
+    }
+
+    token = '';
+    res.status(200).json({
+        status: 'success',
+    })
 
 }
 
