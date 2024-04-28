@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
+require('dotenv').config();
+
 
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
@@ -16,9 +18,17 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: 'success',
-    token,
     data: {
       user: newUser,
     },
   });
 });
+
+
+exports.login = (req,res, next) =>{
+    const {email, password} = req.body;
+
+}
+
+
+
