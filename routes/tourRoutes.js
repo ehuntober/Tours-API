@@ -18,7 +18,7 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan )
 
 router
 .route('/')
-.get(authController.portect,tourController.getAllTours)
+.get(authController.protect,tourController.getAllTours)
     .post(tourController.checkBody, tourController.createTour)
     
 

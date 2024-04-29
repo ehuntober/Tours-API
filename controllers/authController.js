@@ -66,9 +66,20 @@ exports.login =  catchAsync(async (req,res, next) =>{
 })
 
 
-exports.portect = catchAsync(async, (req,res, next) =>{
-  // 1) Getting token and check of it's there
-  if (req.headers.authorization &&  req.headers.authorization.startsWith('Bearer'))
+exports.protect = catchAsync(async (req, res, next) => {
+  // 1) Getting token and check if it's there
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+    console.log(token)
+  }
+
+  if(!token){
+    return next(new AppError('You are not logged in!, please log in  to get access'))
+  };
+
+
+   
 
 
 
