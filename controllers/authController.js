@@ -15,12 +15,13 @@ const signToken = id =>{
 
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
-  });
+  const newUser = await User.create( req.body
+    // name: req.body.name,
+    // email: req.body.email,
+    // password: req.body.password,
+    // passwordConfirm: req.body.passwordConfirm,
+    // passwordChangedAt: req.body.passwordChangedAt
+  );
     const token = signToken(newUser.id)
   // const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
   //   expiresIn: process.env.JWT_EXPIRES_IN,
@@ -77,27 +78,34 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   if(!token){
+
     return next(new AppError('You are not logged in!, please log in  to get access'))
   };
 
   
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token,process.env.JWT_SECRET);
-  console.log(decoded)
+
 
 
   // 3) Check it user still exists
+  const freshUser = await User.findById(decoded.id);
+  if (!freshUser){
+    return next(new AppError("The user belonging to this token does not longer exist", 401))
+  }
 
 
 
   // 4) check if user changed password after the token was issued
+if (freshUser.changePasswordAfter(decoded.iat)) {
+  return next(
+    new AppError('User recently changed password! Please log in again.', 401)
+  );
+}
 
-
-
-
-
-
-  next()
+  // GRANT ACCESS TO PROTECTED ROUTE
+  req.user = freshUser;
+  next();
 })
 
 
