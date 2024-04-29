@@ -5,6 +5,13 @@ require('dotenv').config();
 const AppError = require('./../utils/appError')
 
 
+const signToken = id =>{
+  return jwt.sign({ id}, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+}
+
+
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
@@ -12,10 +19,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
-
-  const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
+    const token = signToken(newUser.id)
+  // const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+  //   expiresIn: process.env.JWT_EXPIRES_IN,
+  // });
 
   res.status(201).json({
     status: 'success',
@@ -39,20 +46,47 @@ exports.login =  catchAsync(async (req,res, next) =>{
 
     // 2) Check if user exists && password is correct
     const user =  await User.findOne({email}).select('+password')
-    const correct = user.correctPassword(password, user.password);
-
-    if (!user || !correct){
-        return next(new AppError('Incorrect email or pasword', 401))
+    if (!user || !(await user.correctPassword(password, user.password))){
+      return next(new AppError('Incorrect email or pasword', 401))
+  
     }
 
 
-    // if everything ok, send token to client
+    // 3) if everything ok, send token to client
+    const token =  signToken(user.id)
 
-    token = '';
     res.status(200).json({
         status: 'success',
+        token,
+        // data: {
+        //     user
+        // }
     })
 
+})
+
+
+exports.portect = catchAsync(async, (req,res, next) =>{
+  // 1) Getting token and check of it's there
+  if (req.headers.authorization &&  req.headers.authorization.startsWith('Bearer'))
+
+
+
+  // 2) Verification token
+
+
+  // 3) Check it user still exists
+
+
+
+  // 4) check if user changed password after the token was issued
+
+
+
+
+
+
+  next()
 })
 
 
