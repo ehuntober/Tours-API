@@ -116,7 +116,26 @@ exports.restrictTo =(...roles) =>{
       return next(new AppError('You do not have permission to perform this aciton', 403))
     }
     next()
-  }
+  };
+};
+
+
+exports.forgetPassword = (req,res,next) =>{
+  // 1) Get user based on posted email
+
+  const user = await Usr.findOne({email:})
+
+
+
+  //2) Generate teh random reset token
+
+
+  //3) sent it to user's email
+
+}
+
+exports.resetPassword =(req,res,next) =>{
+
 }
 
 
