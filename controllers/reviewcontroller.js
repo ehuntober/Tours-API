@@ -1,4 +1,5 @@
-const Review = require('./../model/reviewModel');
+const Review = require('./../models/reviewModel')
+
 const catchAsync = require('./../utils/catchAsync')
 
 
